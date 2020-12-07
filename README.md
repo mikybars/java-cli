@@ -1,3 +1,5 @@
+[![Native image](https://github.com/mperezi/java-cli/workflows/Native%20image/badge.svg)](https://github.com/mperezi/java-cli/actions?query=workflow%3A%22Native+image%22)
+
 > To make the most of this demo you will need a [free Twilio trial account](https://www.twilio.com/docs/usage/tutorials/how-to-use-your-free-trial-account). To set it up just export the variables `$TWILIO_ACCOUNT_SID` and `$TWILIO_AUTH_TOKEN` with the credentials you will find in the [settings pane](https://www.twilio.com/console/project/settings) of  your project.
 
 ## Usage
