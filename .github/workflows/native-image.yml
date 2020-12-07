@@ -1,0 +1,32 @@
+name: Native image
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-ubuntu-mac:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: DeLaGuardo/setup-graalvm@master
+        with:
+          graalvm-version: '20.3.0.java11'
+      - run: java -version
+      - run: gu install native-image
+      - name: Build native image for ${{ matrix.os }} with jbang and GraalVM
+        run: curl -sL https://sh.jbang.dev | bash -s - build --fresh --native SendSms.java
+      - name: Rename the artifact to OS-unique name
+        shell: bash
+        run: |
+          mkdir -p build/native
+          value=`cp $HOME/.jbang/cache/jars/*.bin build/native/sendsms-${{ matrix.os }}`
+      - name: Publish artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: sendsms-${{ matrix.os }}
+          path: build/native
